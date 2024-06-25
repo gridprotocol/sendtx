@@ -2,7 +2,7 @@ module github.com/rockiecn/sendtx
 
 go 1.22.2
 
-replace github.com/grid/contracts => ../../grid-contracts
+replace github.com/grid/contracts => ../grid-contracts
 
 require (
 	github.com/ethereum/go-ethereum v1.14.5

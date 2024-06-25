@@ -35,6 +35,11 @@ var (
 
 	// all contracts addresses
 	Contracts = eth.Address{}
+
+	// abi file path for all contracts used
+	REG_ABI_PATH = "../grid-contracts/abi/registry/Registry.abi"
+	MAR_ABI_PATH = "../grid-contracts/abi/market/Market.abi"
+	CRE_ABI_PATH = "../grid-contracts/abi/credit/Credit.abi"
 )
 
 // read ABI from file
@@ -43,19 +48,19 @@ func init() {
 	fmt.Println("contract addresses:", Contracts)
 
 	// read registry abi from file
-	_RegABI, err := os.ReadFile("../../grid-contracts/abi/registry/Registry.abi")
+	_RegABI, err := os.ReadFile(REG_ABI_PATH)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// read abi from file
-	_MarketABI, err := os.ReadFile("../../grid-contracts/abi/market/Market.abi")
+	_MarketABI, err := os.ReadFile(MAR_ABI_PATH)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// read abi from file
-	_CreditABI, err := os.ReadFile("../../grid-contracts/abi/credit/Credit.abi")
+	_CreditABI, err := os.ReadFile(CRE_ABI_PATH)
 	if err != nil {
 		log.Fatal(err)
 	}
