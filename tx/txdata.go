@@ -11,6 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/grid/contracts/eth"
 	"github.com/grid/contracts/go/market"
+	"github.com/grid/contracts/go/registry"
 )
 
 var (
@@ -44,7 +45,8 @@ var (
 
 // read ABI from file
 func init() {
-	Contracts = eth.LoadJSON()
+	// json file in grid-contracts
+	Contracts = eth.Load("../grid-contracts/eth/contracts.json")
 	fmt.Println("contract addresses:", Contracts)
 
 	// read registry abi from file
@@ -83,9 +85,16 @@ func RegisterData() []byte {
 	functionName := "register"
 	//value := big.NewInt(0)
 
+	// make a cp
+	info, err := newCP()
+	if err != nil {
+		panic(err)
+	}
+
 	// 构造调用函数和参数的方法和输入参数
 	method := registryABI.Methods[functionName]
-	input, err := method.Inputs.Pack("a", "b", "c", uint64(10), uint64(20), uint64(40), uint64(807), uint64(33), uint64(33), uint64(33), uint64(33))
+	//input, err := method.Inputs.Pack("a", "b", "c", uint64(10), uint64(20), uint64(40), uint64(807), uint64(33), uint64(33), uint64(33), uint64(33))
+	input, err := method.Inputs.Pack(info)
 	if err != nil {
 		panic(err)
 	}
@@ -95,6 +104,58 @@ func RegisterData() []byte {
 	//fmt.Printf("Data: %x\n", data)
 
 	return data
+}
+
+// generate a test cp
+func newCP() (*registry.RegistryInfo, error) {
+	// the register cp info
+	info := registry.RegistryInfo{
+		Addr:   common.HexToAddress("addr"),
+		Name:   "cp1",
+		Ip:     "123.123.123.0",
+		Domain: "test domain",
+		Port:   "123",
+		Total: registry.RegistryResources{
+			NCPU:  11,
+			NGPU:  22,
+			NMEM:  33,
+			NDISK: 44,
+		},
+		Price: registry.RegistryPricePerHour{
+			PCPU:  10,
+			PGPU:  20,
+			PMEM:  10,
+			PDISK: 1,
+		},
+	}
+
+	return &info, nil
+}
+
+// for revise
+func newCP2() (*registry.RegistryInfo, error) {
+	// the register cp info
+	info := registry.RegistryInfo{
+		Addr:   common.HexToAddress("addr"),
+		Name:   "revised name",
+		Ip:     "revise ip",
+		Domain: "revised domain",
+		Port:   "revised port",
+		Total: registry.RegistryResources{
+			NCPU:  22,
+			NGPU:  33,
+			NMEM:  44,
+			NDISK: 55,
+		},
+		Price: registry.RegistryPricePerHour{
+			PCPU:  33,
+			PGPU:  33,
+			PMEM:  33,
+			PDISK: 33,
+		},
+	}
+
+	return &info, nil
 }
 
 // the tx data for calling credit.approve
@@ -219,8 +280,12 @@ func ReviseData() []byte {
 	functionName := "revise"
 	method := registryABI.Methods[functionName]
 
+	info, err := newCP2()
+	if err != nil {
+		panic(err)
+	}
 	// construct the input of this method
-	input, err := method.Inputs.Pack("revised ip", "revised domain", "revised port", uint64(22), uint64(33), uint64(44), uint64(55), uint64(33), uint64(33), uint64(33), uint64(33))
+	input, err := method.Inputs.Pack(*info)
 	if err != nil {
 		panic(err)
 	}

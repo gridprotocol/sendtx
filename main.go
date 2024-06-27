@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -9,6 +10,10 @@ import (
 )
 
 func main() {
+	var txType uint
+	flag.UintVar(&txType, "tx", 1, "1=register 2=approve 3=createOrder 4=revise")
+	flag.Parse()
+
 	// connect to an eth client
 	log.Println("connecting client")
 	c, err := ethclient.Dial(tx.Endpoint)
@@ -16,33 +21,36 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// signed register tx for send to chain directly
-	regTx, err := makeRegisterTx(c)
-	if err != nil {
-		log.Fatal(err)
+	switch txType {
+	case 1:
+		// signed register tx for send to chain directly
+		regTx, err := makeRegisterTx(c)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("signedTx for [registcp]: \n%s\n", regTx)
+	case 2:
+		// tx for send to chain directly
+		apprTx, err := makeApproveTx(c)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("signedTx for [approve] credit to market: \n%s\n", apprTx)
+	case 3:
+		// signed market.createorder tx for send to chain directly
+		coTx, err := makeCreateOrderTx(c)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("signedTx for [createorder]: \n%s\n", coTx)
+	case 4:
+		// signed registry.update tx for send to chain directly
+		reviseTx, err := makeReviseTx(c)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("signedTx for [revise]: \n%s\n", reviseTx)
 	}
-	log.Printf("signedTx for [registcp]: \n%s\n", regTx)
-
-	// tx for send to chain directly
-	apprTx, err := makeApproveTx(c)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("signedTx for [approve] credit to market: \n%s\n", apprTx)
-
-	// signed market.createorder tx for send to chain directly
-	coTx, err := makeCreateOrderTx(c)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("signedTx for [createorder]: \n%s\n", coTx)
-
-	// signed registry.update tx for send to chain directly
-	reviseTx, err := makeReviseTx(c)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("signedTx for [revise]: \n%s\n", reviseTx)
 }
 
 // make tx for register cp
