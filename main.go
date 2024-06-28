@@ -44,7 +44,7 @@ func main() {
 		}
 		log.Printf("signedTx for [createorder]: \n%s\n", coTx)
 	case 4:
-		// signed registry.update tx for send to chain directly
+		// signed registry.revise tx for send to chain directly
 		reviseTx, err := makeReviseTx(c)
 		if err != nil {
 			log.Fatal(err)

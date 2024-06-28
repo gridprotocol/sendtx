@@ -175,7 +175,7 @@ func ApproveData() []byte {
 	method := creditABI.Methods[functionName]
 
 	// set the amount to approve to market contract
-	amount, ok := new(big.Int).SetString("2831300", 10)
+	amount, ok := new(big.Int).SetString("2626954", 10)
 	if !ok {
 		panic(fmt.Errorf("big set string failed"))
 	}
