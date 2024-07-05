@@ -18,16 +18,23 @@ var (
 	// chain node
 	Endpoint = "HTTP://127.0.0.1:7545"
 
-	// admin
-	A_SK   = "c1e763d955e6aea410e40b95702108a30efb4d25b32d419910fe2ac611c2229d"
-	A_ADDR = "0x5F7F7e31399531F08C2b47eA1919F11346405a16"
+	// // admin
+	// A_SK   = "c1e763d955e6aea410e40b95702108a30efb4d25b32d419910fe2ac611c2229d"
+	// A_ADDR = "0x5F7F7e31399531F08C2b47eA1919F11346405a16"
 
-	// sk for user, acc1
-	U_SK   = "e8cda8fe7c04afa4a0630af457972f88a645468cb90120a11911669deac5e96e"
-	U_ADDR = "0xe2198eb2e931f9306ABcA68D4F093E0Ac4823B0d"
-	// sk for provider, acc2
-	P_SK   = "ae313c1dc715026cf629641e3ae2dab06f95c7300d97b3121310d375b979f19b"
-	P_ADDR = "0xC4EAc9E1012DFCB4833165F5d35E027EBfE1f640"
+	// // sk for user, acc1
+	// U_SK   = "e8cda8fe7c04afa4a0630af457972f88a645468cb90120a11911669deac5e96e"
+	// U_ADDR = "0xe2198eb2e931f9306ABcA68D4F093E0Ac4823B0d"
+	// // sk for provider, acc2
+	// P_SK   = "ae313c1dc715026cf629641e3ae2dab06f95c7300d97b3121310d375b979f19c"
+	// P_ADDR = "0xC4EAc9E1012DFCB4833165F5d35E027EBfE1f640"
+
+	A_SK   = eth.SK0
+	A_ADDR = eth.HexAddr0
+	U_SK   = eth.SK1
+	U_ADDR = eth.HexAddr1
+	P_SK   = eth.SK2
+	P_ADDR = eth.HexAddr2
 
 	// abis
 	RegABI    string

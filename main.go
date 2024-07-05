@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -60,6 +61,7 @@ func makeRegisterTx(c *ethclient.Client) ([]byte, error) {
 
 	log.Println("making signed register tx")
 	// make a signed tx
+	fmt.Println("cp sk: ", tx.P_SK)
 	signedTx, err := tx.MakeSignedTx(c, tx.P_SK, common.HexToAddress(tx.Contracts.Registry), nil, 400000, data)
 	if err != nil {
 		return nil, err

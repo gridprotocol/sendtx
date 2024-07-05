@@ -53,8 +53,11 @@ func MakeSignedTx(client *ethclient.Client,
 	// make tx
 	tx := types.NewTransaction(nonce, to, value, gasLimit, gasPrice, data)
 
+	// get the chainID
+	chainID, err := client.ChainID(context.Background())
+
 	// sign tx
-	signedTx, err := types.SignTx(tx, types.NewEIP155Signer(big.NewInt(1)), privateKey)
+	signedTx, err := types.SignTx(tx, types.NewEIP155Signer(chainID), privateKey)
 	if err != nil {
 		return nil, err
 	}
