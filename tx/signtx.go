@@ -55,6 +55,9 @@ func MakeSignedTx(client *ethclient.Client,
 
 	// get the chainID
 	chainID, err := client.ChainID(context.Background())
+	if err != nil {
+		panic(err)
+	}
 
 	// sign tx
 	signedTx, err := types.SignTx(tx, types.NewEIP155Signer(chainID), privateKey)
