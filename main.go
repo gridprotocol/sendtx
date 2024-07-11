@@ -12,7 +12,7 @@ import (
 
 func main() {
 	var txType uint
-	flag.UintVar(&txType, "tx", 1, "1=register 2=approve 3=createOrder 4=revise")
+	flag.UintVar(&txType, "tx", 1, "1=register 2=approve 3=createOrder 4=revise 5=userConfirm")
 	flag.Parse()
 
 	// connect to an eth client
@@ -51,7 +51,15 @@ func main() {
 			log.Fatal(err)
 		}
 		log.Printf("signedTx for [revise]: \n%s\n", reviseTx)
+	case 5:
+		// signed market.userconfirm tx for send to chain directly
+		confirmTx, err := makeUserConfirmTx(c)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("signedTx for [userconfirm]: \n%s\n", confirmTx)
 	}
+
 }
 
 // make tx for register cp
@@ -126,6 +134,27 @@ func makeReviseTx(c *ethclient.Client) ([]byte, error) {
 	log.Println("making registry.revise tx")
 	// make a signed tx for revise, sender must be provider
 	signedTx, err := tx.MakeSignedTx(c, tx.P_SK, common.HexToAddress(tx.Contracts.Registry), nil, 400000, data)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// marshal tx into json
+	js, err := signedTx.MarshalJSON()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return js, nil
+}
+
+// make tx for user confirm
+func makeUserConfirmTx(c *ethclient.Client) ([]byte, error) {
+	// data for tx
+	data := tx.UserConfirmData()
+
+	log.Println("making user confirm tx")
+	// make a signed tx for createorder, sender must be user
+	signedTx, err := tx.MakeSignedTx(c, tx.U_SK, common.HexToAddress(tx.Contracts.Market), nil, 400000, data)
 	if err != nil {
 		log.Fatal(err)
 	}

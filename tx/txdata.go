@@ -302,3 +302,27 @@ func ReviseData() []byte {
 
 	return data
 }
+
+// tx data for user confirm
+func UserConfirmData() []byte {
+	// contract abi
+	marketABI, err := abi.JSON(strings.NewReader(MarketABI))
+	if err != nil {
+		panic(err)
+	}
+
+	// function to be called
+	functionName := "userConfirm"
+	method := marketABI.Methods[functionName]
+
+	// construct the input of this method
+	input, err := method.Inputs.Pack(eth.Addr2)
+	if err != nil {
+		panic(err)
+	}
+
+	// the full data of tx
+	data := append(method.ID, input...)
+
+	return data
+}
