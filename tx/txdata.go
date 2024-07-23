@@ -10,6 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/grid/contracts/eth"
+	"github.com/grid/contracts/eth/contracts"
 	"github.com/grid/contracts/go/market"
 	"github.com/grid/contracts/go/registry"
 )
@@ -42,7 +43,7 @@ var (
 	CreditABI string
 
 	// all contracts addresses
-	Contracts = eth.Address{}
+	Contracts = contracts.Contracts{}
 
 	// abi file path for all contracts used
 	REG_ABI_PATH = "../grid-contracts/abi/registry/Registry.abi"
@@ -52,8 +53,11 @@ var (
 
 // read ABI from file
 func init() {
-	// json file in grid-contracts
-	Contracts = eth.Load("../grid-contracts/eth/contracts.json")
+	// load contracts
+	local := contracts.Local{}
+	local.LoadPath("../grid-contracts/eth/contracts/local.json")
+	Contracts = local.Contracts
+
 	fmt.Println("contract addresses:", Contracts)
 
 	// read registry abi from file
@@ -182,7 +186,7 @@ func ApproveData() []byte {
 	method := creditABI.Methods[functionName]
 
 	// set the amount to approve to market contract
-	amount, ok := new(big.Int).SetString("2626954", 10)
+	amount, ok := new(big.Int).SetString("262695400", 10)
 	if !ok {
 		panic(fmt.Errorf("big set string failed"))
 	}
@@ -233,7 +237,7 @@ func CreateOrderData() []byte {
 // generate a test order
 func newOrder() (*market.MarketOrder, error) {
 	// generate an order with init data
-	totalValue, ok := new(big.Int).SetString("2626954", 10)
+	totalValue, ok := new(big.Int).SetString("262695400", 10)
 	if !ok {
 		return nil, fmt.Errorf("big set string failed")
 	}
@@ -268,8 +272,8 @@ func newOrder() (*market.MarketOrder, error) {
 		ActivateTime:    new(big.Int).SetInt64(0),
 		LastSettleTime:  new(big.Int).SetInt64(0),
 		Probation:       new(big.Int).SetInt64(5),
-		Duration:        new(big.Int).SetInt64(1231),
-		Status:          0, // unactive
+		Duration:        new(big.Int).SetInt64(123100),
+		Status:          1, // unactive
 	}
 
 	return &order, nil
