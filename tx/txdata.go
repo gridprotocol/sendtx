@@ -330,3 +330,26 @@ func UserConfirmData() []byte {
 
 	return data
 }
+
+func UserCancelData() []byte {
+	// contract abi
+	marketABI, err := abi.JSON(strings.NewReader(MarketABI))
+	if err != nil {
+		panic(err)
+	}
+
+	// function to be called
+	functionName := "userCancel"
+	method := marketABI.Methods[functionName]
+
+	// construct the input of this method
+	input, err := method.Inputs.Pack(eth.Addr2)
+	if err != nil {
+		panic(err)
+	}
+
+	// the full data of tx
+	data := append(method.ID, input...)
+
+	return data
+}
