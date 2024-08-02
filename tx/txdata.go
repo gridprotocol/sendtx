@@ -19,6 +19,9 @@ var (
 	// chain node
 	Endpoint = "HTTP://127.0.0.1:7545"
 
+	// sepolia chain
+	Endpoint2 string = "https://rpc.sepolia.ethpandaops.io"
+
 	// // admin
 	// A_SK   = "c1e763d955e6aea410e40b95702108a30efb4d25b32d419910fe2ac611c2229d"
 	// A_ADDR = "0x5F7F7e31399531F08C2b47eA1919F11346405a16"
@@ -237,7 +240,7 @@ func CreateOrderData() []byte {
 // generate a test order
 func newOrder() (*market.MarketOrder, error) {
 	// generate an order with init data
-	totalValue, ok := new(big.Int).SetString("262695400", 10)
+	totalValue, ok := new(big.Int).SetString("40", 10)
 	if !ok {
 		return nil, fmt.Errorf("big set string failed")
 	}
@@ -247,21 +250,52 @@ func newOrder() (*market.MarketOrder, error) {
 	}
 
 	// make an order
+	/*
+		order := market.MarketOrder{
+			User:     eth.Addr1,
+			Provider: eth.Addr2,
+
+			P: market.MarketPricePerHour{
+				PCPU:  100,
+				PGPU:  1000,
+				PMEM:  10,
+				PDISK: 1,
+			},
+			R: market.MarketResources{
+				NCPU:  1,
+				NGPU:  2,
+				NMEM:  3,
+				NDISK: 4,
+			},
+			// deposit 0.01 eth
+			TotalValue:      totalValue,
+			Remain:          totalValue,
+			Remuneration:    remu,
+			UserConfirm:     false,
+			ProviderConfirm: false,
+			ActivateTime:    new(big.Int).SetInt64(0),
+			LastSettleTime:  new(big.Int).SetInt64(0),
+			Probation:       new(big.Int).SetInt64(5),
+			Duration:        new(big.Int).SetInt64(123100),
+			Status:          1, // unactive
+		}
+	*/
+
 	order := market.MarketOrder{
 		User:     eth.Addr1,
 		Provider: eth.Addr2,
 
 		P: market.MarketPricePerHour{
-			PCPU:  100,
-			PGPU:  1000,
-			PMEM:  10,
+			PCPU:  1,
+			PGPU:  1,
+			PMEM:  1,
 			PDISK: 1,
 		},
 		R: market.MarketResources{
 			NCPU:  1,
-			NGPU:  2,
-			NMEM:  3,
-			NDISK: 4,
+			NGPU:  1,
+			NMEM:  1,
+			NDISK: 1,
 		},
 		// deposit 0.01 eth
 		TotalValue:      totalValue,
@@ -272,7 +306,7 @@ func newOrder() (*market.MarketOrder, error) {
 		ActivateTime:    new(big.Int).SetInt64(0),
 		LastSettleTime:  new(big.Int).SetInt64(0),
 		Probation:       new(big.Int).SetInt64(5),
-		Duration:        new(big.Int).SetInt64(123100),
+		Duration:        new(big.Int).SetInt64(10),
 		Status:          1, // unactive
 	}
 
