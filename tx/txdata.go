@@ -56,13 +56,6 @@ var (
 
 // read ABI from file
 func init() {
-	// load contracts
-	local := contracts.Local{}
-	local.LoadPath("../grid-contracts/eth/contracts/local.json")
-	Contracts = local.Contracts
-
-	fmt.Println("contract addresses:", Contracts)
-
 	// read registry abi from file
 	_RegABI, err := os.ReadFile(REG_ABI_PATH)
 	if err != nil {
@@ -124,10 +117,10 @@ func RegisterData() []byte {
 func newCP() (*registry.RegistryInfo, error) {
 	// the register cp info
 	info := registry.RegistryInfo{
-		Addr:   common.HexToAddress("addr"),
+		Addr:   common.HexToAddress("0xEf95c72C836605203F7f66788E450Af2a4141957"),
 		Name:   "cp1",
 		Ip:     "123.123.123.0",
-		Domain: "test domain",
+		Domain: "testdomain",
 		Port:   "123",
 		Total: registry.RegistryResources{
 			NCPU:  11,
@@ -150,7 +143,7 @@ func newCP() (*registry.RegistryInfo, error) {
 func newCP2() (*registry.RegistryInfo, error) {
 	// the register cp info
 	info := registry.RegistryInfo{
-		Addr:   common.HexToAddress("addr"),
+		Addr:   common.HexToAddress("0xEf95c72C836605203F7f66788E450Af2a4141957"),
 		Name:   "revised name",
 		Ip:     "revise ip",
 		Domain: "revised domain",
