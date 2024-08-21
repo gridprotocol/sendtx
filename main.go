@@ -260,7 +260,7 @@ func makeUserCancelTx(c *ethclient.Client) (*types.Transaction, []byte, error) {
 
 // send tx to chain
 func sendTx(ep string, c *ethclient.Client, tx *types.Transaction) {
-	log.Printf("sending signed register tx")
+	log.Printf("sending signed tx")
 
 	// send the tx to client
 	if err := c.SendTransaction(context.Background(), tx); err != nil {

@@ -291,16 +291,14 @@ func newOrder() (*market.MarketOrder, error) {
 			NDISK: 1,
 		},
 		// deposit 0.01 eth
-		TotalValue:      totalValue,
-		Remain:          totalValue,
-		Remuneration:    remu,
-		UserConfirm:     false,
-		ProviderConfirm: false,
-		ActivateTime:    new(big.Int).SetInt64(0),
-		LastSettleTime:  new(big.Int).SetInt64(0),
-		Probation:       new(big.Int).SetInt64(5),
-		Duration:        new(big.Int).SetInt64(10),
-		Status:          1, // unactive
+		TotalValue:     totalValue,
+		Remain:         totalValue,
+		Remuneration:   remu,
+		ActivateTime:   new(big.Int).SetInt64(0),
+		LastSettleTime: new(big.Int).SetInt64(0),
+		Probation:      new(big.Int).SetInt64(5),
+		Duration:       new(big.Int).SetInt64(10),
+		Status:         1, // unactive
 	}
 
 	return &order, nil
