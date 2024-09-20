@@ -82,13 +82,13 @@ func init() {
 
 // the tx data for calling registry.register
 func RegisterData() []byte {
-	// 假设我们有一个已编译的合约ABI
+	// abi
 	registryABI, err := abi.JSON(strings.NewReader(RegABI))
 	if err != nil {
 		panic(err)
 	}
 
-	// 我们要调用的函数和参数
+	// func name
 	functionName := "register"
 	//value := big.NewInt(0)
 
@@ -98,7 +98,7 @@ func RegisterData() []byte {
 		panic(err)
 	}
 
-	// 构造调用函数和参数的方法和输入参数
+	// pack params
 	method := registryABI.Methods[functionName]
 	//input, err := method.Inputs.Pack("a", "b", "c", uint64(10), uint64(20), uint64(40), uint64(807), uint64(33), uint64(33), uint64(33), uint64(33))
 	input, err := method.Inputs.Pack(info)
@@ -122,18 +122,6 @@ func newCP() (*registry.RegistryInfo, error) {
 		Ip:     "123.123.123.0",
 		Domain: "testdomain",
 		Port:   "123",
-		Total: registry.RegistryResources{
-			NCPU:  11,
-			NGPU:  22,
-			NMEM:  33,
-			NDISK: 44,
-		},
-		Price: registry.RegistryPricePerHour{
-			PCPU:  10,
-			PGPU:  20,
-			PMEM:  10,
-			PDISK: 1,
-		},
 	}
 
 	return &info, nil
@@ -148,17 +136,83 @@ func newCP2() (*registry.RegistryInfo, error) {
 		Ip:     "revise ip",
 		Domain: "revised domain",
 		Port:   "revised port",
-		Total: registry.RegistryResources{
-			NCPU:  22,
-			NGPU:  33,
-			NMEM:  44,
-			NDISK: 55,
+	}
+
+	return &info, nil
+}
+
+// the tx data for call add_node
+func AddNodeData(node *registry.RegistryNode) []byte {
+	// registry abi
+	registryABI, err := abi.JSON(strings.NewReader(RegABI))
+	if err != nil {
+		panic(err)
+	}
+
+	// func name
+	functionName := "add_node"
+	//value := big.NewInt(0)
+
+	// pack params
+	method := registryABI.Methods[functionName]
+	//input, err := method.Inputs.Pack("a", "b", "c", uint64(10), uint64(20), uint64(40), uint64(807), uint64(33), uint64(33), uint64(33), uint64(33))
+	input, err := method.Inputs.Pack(node)
+	if err != nil {
+		panic(err)
+	}
+
+	// 构造完整的data字段
+	data := append(method.ID, input...)
+	//fmt.Printf("Data: %x\n", data)
+
+	return data
+}
+
+func NewNode() (*registry.RegistryNode, error) {
+	// the register cp info
+	info := registry.RegistryNode{
+		Id: new(big.Int).SetInt64(0),
+
+		Cpu: registry.RegistryCPU{
+			Price: 10,
+			Model: "i5",
 		},
-		Price: registry.RegistryPricePerHour{
-			PCPU:  33,
-			PGPU:  33,
-			PMEM:  33,
-			PDISK: 33,
+		Gpu: registry.RegistryGPU{
+			Price: 100,
+			Model: "RTX4080",
+		},
+		Mem: registry.RegistryMEM{
+			Num:   8 * 1024 * 1024 * 1024,
+			Price: 10,
+		},
+		Disk: registry.RegistryDISK{
+			Num: 4 * 1024 * 1024 * 1024 * 1024,
+		},
+	}
+
+	return &info, nil
+}
+
+// make a node
+func NewNode2() (*registry.RegistryNode, error) {
+	// the register cp info
+	info := registry.RegistryNode{
+		Id: new(big.Int).SetInt64(0),
+
+		Cpu: registry.RegistryCPU{
+			Price: 10,
+			Model: "i7",
+		},
+		Gpu: registry.RegistryGPU{
+			Price: 100,
+			Model: "RTX4090",
+		},
+		Mem: registry.RegistryMEM{
+			Num:   16 * 1024 * 1024 * 1024,
+			Price: 10,
+		},
+		Disk: registry.RegistryDISK{
+			Num: 10 * 1024 * 1024 * 1024 * 1024,
 		},
 	}
 
@@ -243,53 +297,13 @@ func newOrder() (*market.MarketOrder, error) {
 	}
 
 	// make an order
-	/*
-		order := market.MarketOrder{
-			User:     eth.Addr1,
-			Provider: eth.Addr2,
-
-			P: market.MarketPricePerHour{
-				PCPU:  100,
-				PGPU:  1000,
-				PMEM:  10,
-				PDISK: 1,
-			},
-			R: market.MarketResources{
-				NCPU:  1,
-				NGPU:  2,
-				NMEM:  3,
-				NDISK: 4,
-			},
-			// deposit 0.01 eth
-			TotalValue:      totalValue,
-			Remain:          totalValue,
-			Remuneration:    remu,
-			UserConfirm:     false,
-			ProviderConfirm: false,
-			ActivateTime:    new(big.Int).SetInt64(0),
-			LastSettleTime:  new(big.Int).SetInt64(0),
-			Probation:       new(big.Int).SetInt64(5),
-			Duration:        new(big.Int).SetInt64(123100),
-			Status:          1, // unactive
-		}
-	*/
-
 	order := market.MarketOrder{
 		User:     eth.Addr1,
 		Provider: eth.Addr2,
 
-		P: market.MarketPricePerHour{
-			PCPU:  1,
-			PGPU:  1,
-			PMEM:  1,
-			PDISK: 1,
-		},
-		R: market.MarketResources{
-			NCPU:  1,
-			NGPU:  1,
-			NMEM:  1,
-			NDISK: 1,
-		},
+		// the cp's node selected bye this order
+		NodeId: new(big.Int).SetInt64(1),
+
 		// deposit 0.01 eth
 		TotalValue:     totalValue,
 		Remain:         totalValue,
