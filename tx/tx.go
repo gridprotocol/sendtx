@@ -60,7 +60,7 @@ func (tx *Tx) MakeRegisterTx() error {
 }
 
 // add node tx
-func (tx *Tx) MakeAddNodeTx(node *registry.RegistryNode) error {
+func (tx *Tx) MakeAddNodeTx(node *registry.IRegistryNode) error {
 	// tx data
 	data := AddNodeData(node)
 

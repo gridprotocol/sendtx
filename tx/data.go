@@ -114,9 +114,9 @@ func RegisterData() []byte {
 }
 
 // generate a test cp
-func newCP() (*registry.RegistryInfo, error) {
+func newCP() (*registry.IRegistryInfo, error) {
 	// the register cp info
-	info := registry.RegistryInfo{
+	info := registry.IRegistryInfo{
 		Addr:   common.HexToAddress("0xEf95c72C836605203F7f66788E450Af2a4141957"),
 		Name:   "cp1",
 		Ip:     "123.123.123.0",
@@ -128,9 +128,9 @@ func newCP() (*registry.RegistryInfo, error) {
 }
 
 // for revise
-func newCP2() (*registry.RegistryInfo, error) {
+func newCP2() (*registry.IRegistryInfo, error) {
 	// the register cp info
-	info := registry.RegistryInfo{
+	info := registry.IRegistryInfo{
 		Addr:   common.HexToAddress("0xEf95c72C836605203F7f66788E450Af2a4141957"),
 		Name:   "revised name",
 		Ip:     "revise ip",
@@ -142,7 +142,7 @@ func newCP2() (*registry.RegistryInfo, error) {
 }
 
 // the tx data for call add_node
-func AddNodeData(node *registry.RegistryNode) []byte {
+func AddNodeData(node *registry.IRegistryNode) []byte {
 	// registry abi
 	registryABI, err := abi.JSON(strings.NewReader(RegABI))
 	if err != nil {
@@ -168,25 +168,26 @@ func AddNodeData(node *registry.RegistryNode) []byte {
 	return data
 }
 
-func NewNode() (*registry.RegistryNode, error) {
+func NewNode() (*registry.IRegistryNode, error) {
 	// the register cp info
-	info := registry.RegistryNode{
+	info := registry.IRegistryNode{
 		Id: new(big.Int).SetInt64(0),
 
-		Cpu: registry.RegistryCPU{
-			Price: 10,
+		Cpu: registry.IRegistryCPU{
+			Price: new(big.Int).SetInt64(10),
 			Model: "i5",
 		},
-		Gpu: registry.RegistryGPU{
-			Price: 100,
+		Gpu: registry.IRegistryGPU{
+			Price: new(big.Int).SetInt64(100),
 			Model: "RTX4080",
 		},
-		Mem: registry.RegistryMEM{
-			Num:   8 * 1024 * 1024 * 1024,
-			Price: 10,
+		Mem: registry.IRegistryMEM{
+			Num:   new(big.Int).SetInt64(1),
+			Price: new(big.Int).SetInt64(10),
 		},
-		Disk: registry.RegistryDISK{
-			Num: 4 * 1024 * 1024 * 1024 * 1024,
+		Disk: registry.IRegistryDISK{
+			Num:   new(big.Int).SetInt64(1),
+			Price: new(big.Int).SetInt64(10),
 		},
 	}
 
@@ -194,25 +195,26 @@ func NewNode() (*registry.RegistryNode, error) {
 }
 
 // make a node
-func NewNode2() (*registry.RegistryNode, error) {
+func NewNode2() (*registry.IRegistryNode, error) {
 	// the register cp info
-	info := registry.RegistryNode{
+	info := registry.IRegistryNode{
 		Id: new(big.Int).SetInt64(0),
 
-		Cpu: registry.RegistryCPU{
-			Price: 10,
+		Cpu: registry.IRegistryCPU{
+			Price: new(big.Int).SetInt64(1),
 			Model: "i7",
 		},
-		Gpu: registry.RegistryGPU{
-			Price: 100,
+		Gpu: registry.IRegistryGPU{
+			Price: new(big.Int).SetInt64(1),
 			Model: "RTX4090",
 		},
-		Mem: registry.RegistryMEM{
-			Num:   16 * 1024 * 1024 * 1024,
-			Price: 10,
+		Mem: registry.IRegistryMEM{
+			Num:   new(big.Int).SetInt64(1),
+			Price: new(big.Int).SetInt64(1),
 		},
-		Disk: registry.RegistryDISK{
-			Num: 10 * 1024 * 1024 * 1024 * 1024,
+		Disk: registry.IRegistryDISK{
+			Num:   new(big.Int).SetInt64(1),
+			Price: new(big.Int).SetInt64(1),
 		},
 	}
 
