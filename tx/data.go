@@ -174,20 +174,24 @@ func NewNode() (*registry.IRegistryNode, error) {
 		Id: new(big.Int).SetInt64(0),
 
 		Cpu: registry.IRegistryCPU{
-			Price: new(big.Int).SetInt64(10),
-			Model: "i5",
+			PriceMon: new(big.Int).SetUint64(25920000),
+			PriceSec: new(big.Int).SetUint64(0),
+			Model:    "i5",
 		},
 		Gpu: registry.IRegistryGPU{
-			Price: new(big.Int).SetInt64(100),
-			Model: "RTX4080",
+			PriceMon: new(big.Int).SetUint64(259200000),
+			PriceSec: new(big.Int).SetUint64(0),
+			Model:    "RTX4080",
 		},
 		Mem: registry.IRegistryMEM{
-			Num:   new(big.Int).SetInt64(1),
-			Price: new(big.Int).SetInt64(10),
+			Num:      new(big.Int).SetUint64(2592000),
+			PriceMon: new(big.Int).SetUint64(259200000),
+			PriceSec: new(big.Int).SetUint64(0),
 		},
 		Disk: registry.IRegistryDISK{
-			Num:   new(big.Int).SetInt64(1),
-			Price: new(big.Int).SetInt64(10),
+			Num:      new(big.Int).SetUint64(2592000),
+			PriceMon: new(big.Int).SetUint64(25920000),
+			PriceSec: new(big.Int).SetUint64(0),
 		},
 	}
 
@@ -201,20 +205,24 @@ func NewNode2() (*registry.IRegistryNode, error) {
 		Id: new(big.Int).SetInt64(0),
 
 		Cpu: registry.IRegistryCPU{
-			Price: new(big.Int).SetInt64(1),
-			Model: "i7",
+			PriceMon: new(big.Int).SetUint64(2592000),
+			PriceSec: new(big.Int).SetUint64(0),
+			Model:    "i7",
 		},
 		Gpu: registry.IRegistryGPU{
-			Price: new(big.Int).SetInt64(1),
-			Model: "RTX4090",
+			PriceMon: new(big.Int).SetUint64(2592000),
+			PriceSec: new(big.Int).SetUint64(0),
+			Model:    "RTX4090",
 		},
 		Mem: registry.IRegistryMEM{
-			Num:   new(big.Int).SetInt64(1),
-			Price: new(big.Int).SetInt64(1),
+			Num:      new(big.Int).SetUint64(1),
+			PriceMon: new(big.Int).SetUint64(2592000),
+			PriceSec: new(big.Int).SetUint64(0),
 		},
 		Disk: registry.IRegistryDISK{
-			Num:   new(big.Int).SetInt64(1),
-			Price: new(big.Int).SetInt64(1),
+			Num:      new(big.Int).SetUint64(1),
+			PriceMon: new(big.Int).SetUint64(2592000),
+			PriceSec: new(big.Int).SetUint64(0),
 		},
 	}
 
@@ -275,7 +283,7 @@ func CreateOrderData() []byte {
 
 	fmt.Println("packing")
 	// pack all params into input
-	input, err := method.Inputs.Pack(eth.Addr2, *order)
+	input, err := method.Inputs.Pack(*order)
 	if err != nil {
 		panic(err)
 	}
@@ -287,7 +295,7 @@ func CreateOrderData() []byte {
 }
 
 // generate a test order
-func newOrder() (*market.MarketOrder, error) {
+func newOrder() (*market.IMarketOrder, error) {
 	// generate an order with init data
 	totalValue, ok := new(big.Int).SetString("40", 10)
 	if !ok {
@@ -299,7 +307,7 @@ func newOrder() (*market.MarketOrder, error) {
 	}
 
 	// make an order
-	order := market.MarketOrder{
+	order := market.IMarketOrder{
 		User:     eth.Addr1,
 		Provider: eth.Addr2,
 
