@@ -283,7 +283,7 @@ func CreateOrderData() []byte {
 
 	fmt.Println("packing")
 	// pack all params into input
-	input, err := method.Inputs.Pack(*order)
+	input, err := method.Inputs.Pack(eth.Addr2, *order)
 	if err != nil {
 		panic(err)
 	}
@@ -308,14 +308,14 @@ func newOrder() (*market.IMarketOrder, error) {
 
 	// make an order
 	order := market.IMarketOrder{
-		User:     eth.Addr1,
-		Provider: eth.Addr2,
+		// User:     eth.Addr1,
+		// Provider: eth.Addr2,
 
 		// the cp's node selected bye this order
 		NodeId: new(big.Int).SetInt64(1),
 
 		// deposit 0.01 eth
-		TotalValue:     totalValue,
+		// TotalValue:     totalValue,
 		Remain:         totalValue,
 		Remuneration:   remu,
 		ActivateTime:   new(big.Int).SetInt64(0),
