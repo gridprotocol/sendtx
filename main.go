@@ -7,6 +7,7 @@ import (
 
 	"github.com/rockiecn/sendtx/tx"
 
+	"github.com/grid/contracts/eth"
 	"github.com/grid/contracts/eth/contracts"
 )
 
@@ -25,23 +26,32 @@ func main() {
 	var endpoint string
 	switch *chain {
 	case "local":
-		endpoint = tx.Endpoint
+		endpoint = eth.Ganache
 
 		// load contracts
 		local := contracts.Local{}
 		local.LoadPath("../grid-contracts/eth/contracts/local.json")
 		tx.Contracts = local.Contracts
 
-		fmt.Println("contract addresses:", tx.Contracts)
+		fmt.Println("contract addresses on ganache:", tx.Contracts)
 	case "sepo":
-		endpoint = tx.Endpoint2
+		endpoint = eth.Sepolia
 
 		// load contracts
 		sepo := contracts.Sepo{}
 		sepo.LoadPath("../grid-contracts/eth/contracts/sepo.json")
 		tx.Contracts = sepo.Contracts
 
-		fmt.Println("contract addresses:", tx.Contracts)
+		fmt.Println("contract addresses on sepo:", tx.Contracts)
+	case "dev":
+		endpoint = eth.DevChain
+
+		// load contracts
+		dev := contracts.Sepo{}
+		dev.LoadPath("../grid-contracts/eth/contracts/dev.json")
+		tx.Contracts = dev.Contracts
+
+		fmt.Println("contract addresses on dev:", tx.Contracts)
 	}
 
 	txObj := tx.NewTx(endpoint)

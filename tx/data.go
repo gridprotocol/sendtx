@@ -16,11 +16,10 @@ import (
 )
 
 var (
-	// chain node
-	Endpoint = "HTTP://127.0.0.1:7545"
-
-	// sepolia chain
-	Endpoint2 string = "https://rpc.sepolia.ethpandaops.io"
+	// // chain node
+	// Endpoint = "HTTP://127.0.0.1:7545"
+	// // sepolia chain
+	// Endpoint2 string = "https://rpc.sepolia.ethpandaops.io"
 
 	// // admin
 	// A_SK   = "c1e763d955e6aea410e40b95702108a30efb4d25b32d419910fe2ac611c2229d"
