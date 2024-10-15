@@ -85,6 +85,8 @@ func main() {
 			log.Fatal(err)
 		}
 
+		log.Printf("signedTx for [add node 1]: \n%s\n", txObj.JsonTx)
+
 		// send tx
 		if *auto {
 			err := txObj.Send()
@@ -102,6 +104,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		log.Printf("signedTx for [add node 2]: \n%s\n", txObj.JsonTx)
 
 		// send tx
 		if *auto {

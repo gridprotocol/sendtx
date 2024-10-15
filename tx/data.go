@@ -121,6 +121,13 @@ func newCP() (*registry.IRegistryInfo, error) {
 		Ip:     "123.123.123.0",
 		Domain: "testdomain",
 		Port:   "123",
+
+		NNode: new(big.Int).SetInt64(0),
+		UNode: new(big.Int).SetInt64(0),
+		NMem:  new(big.Int).SetInt64(0),
+		UMem:  new(big.Int).SetInt64(0),
+		NDisk: new(big.Int).SetInt64(0),
+		UDisk: new(big.Int).SetInt64(0),
 	}
 
 	return &info, nil
@@ -135,6 +142,13 @@ func newCP2() (*registry.IRegistryInfo, error) {
 		Ip:     "revise ip",
 		Domain: "revised domain",
 		Port:   "revised port",
+
+		NNode: new(big.Int).SetInt64(0),
+		UNode: new(big.Int).SetInt64(0),
+		NMem:  new(big.Int).SetInt64(0),
+		UMem:  new(big.Int).SetInt64(0),
+		NDisk: new(big.Int).SetInt64(0),
+		UDisk: new(big.Int).SetInt64(0),
 	}
 
 	return &info, nil
