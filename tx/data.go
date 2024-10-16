@@ -113,9 +113,9 @@ func RegisterData() []byte {
 }
 
 // generate a test cp
-func newCP() (*registry.IRegistryInfo, error) {
+func newCP() (*registry.IRegistryCP, error) {
 	// the register cp info
-	info := registry.IRegistryInfo{
+	info := registry.IRegistryCP{
 		Addr:   common.HexToAddress("0xEf95c72C836605203F7f66788E450Af2a4141957"),
 		Name:   "cp1",
 		Ip:     "123.123.123.0",
@@ -134,9 +134,9 @@ func newCP() (*registry.IRegistryInfo, error) {
 }
 
 // for revise
-func newCP2() (*registry.IRegistryInfo, error) {
+func newCP2() (*registry.IRegistryCP, error) {
 	// the register cp info
-	info := registry.IRegistryInfo{
+	info := registry.IRegistryCP{
 		Addr:   common.HexToAddress("0xEf95c72C836605203F7f66788E450Af2a4141957"),
 		Name:   "revised name",
 		Ip:     "revise ip",
@@ -184,6 +184,7 @@ func AddNodeData(node *registry.IRegistryNode) []byte {
 func NewNode() (*registry.IRegistryNode, error) {
 	// the register cp info
 	info := registry.IRegistryNode{
+		Cp: eth.Addr2,
 		Id: new(big.Int).SetInt64(0),
 
 		Cpu: registry.IRegistryCPU{
@@ -215,6 +216,7 @@ func NewNode() (*registry.IRegistryNode, error) {
 func NewNode2() (*registry.IRegistryNode, error) {
 	// the register cp info
 	info := registry.IRegistryNode{
+		Cp: eth.Addr2,
 		Id: new(big.Int).SetInt64(0),
 
 		Cpu: registry.IRegistryCPU{
