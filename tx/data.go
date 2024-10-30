@@ -122,12 +122,12 @@ func newCP() (*registry.IRegistryCP, error) {
 		Domain: "testdomain",
 		Port:   "123",
 
-		NNode: new(big.Int).SetInt64(0),
-		UNode: new(big.Int).SetInt64(0),
-		NMem:  new(big.Int).SetInt64(0),
-		UMem:  new(big.Int).SetInt64(0),
-		NDisk: new(big.Int).SetInt64(0),
-		UDisk: new(big.Int).SetInt64(0),
+		NNode: 0,
+		UNode: 0,
+		NMem:  0,
+		UMem:  0,
+		NDisk: 0,
+		UDisk: 0,
 	}
 
 	return &info, nil
@@ -143,12 +143,12 @@ func newCP2() (*registry.IRegistryCP, error) {
 		Domain: "revised domain",
 		Port:   "revised port",
 
-		NNode: new(big.Int).SetInt64(0),
-		UNode: new(big.Int).SetInt64(0),
-		NMem:  new(big.Int).SetInt64(0),
-		UMem:  new(big.Int).SetInt64(0),
-		NDisk: new(big.Int).SetInt64(0),
-		UDisk: new(big.Int).SetInt64(0),
+		NNode: 0,
+		UNode: 0,
+		NMem:  0,
+		UMem:  0,
+		NDisk: 0,
+		UDisk: 0,
 	}
 
 	return &info, nil
@@ -185,7 +185,7 @@ func NewNode() (*registry.IRegistryNode, error) {
 	// the register cp info
 	info := registry.IRegistryNode{
 		Cp: eth.Addr2,
-		Id: new(big.Int).SetInt64(0),
+		Id: 0,
 
 		Cpu: registry.IRegistryCPU{
 			PriceMon: new(big.Int).SetUint64(25920000),
@@ -198,12 +198,12 @@ func NewNode() (*registry.IRegistryNode, error) {
 			Model:    "RTX4080",
 		},
 		Mem: registry.IRegistryMEM{
-			Num:      new(big.Int).SetUint64(2592000),
+			Num:      2592000,
 			PriceMon: new(big.Int).SetUint64(259200000),
 			PriceSec: new(big.Int).SetUint64(0),
 		},
 		Disk: registry.IRegistryDISK{
-			Num:      new(big.Int).SetUint64(2592000),
+			Num:      2592000,
 			PriceMon: new(big.Int).SetUint64(25920000),
 			PriceSec: new(big.Int).SetUint64(0),
 		},
@@ -217,7 +217,7 @@ func NewNode2() (*registry.IRegistryNode, error) {
 	// the register cp info
 	info := registry.IRegistryNode{
 		Cp: eth.Addr2,
-		Id: new(big.Int).SetInt64(0),
+		Id: 0,
 
 		Cpu: registry.IRegistryCPU{
 			PriceMon: new(big.Int).SetUint64(2592000),
@@ -230,12 +230,12 @@ func NewNode2() (*registry.IRegistryNode, error) {
 			Model:    "RTX4090",
 		},
 		Mem: registry.IRegistryMEM{
-			Num:      new(big.Int).SetUint64(1),
+			Num:      1,
 			PriceMon: new(big.Int).SetUint64(2592000),
 			PriceSec: new(big.Int).SetUint64(0),
 		},
 		Disk: registry.IRegistryDISK{
-			Num:      new(big.Int).SetUint64(1),
+			Num:      1,
 			PriceMon: new(big.Int).SetUint64(2592000),
 			PriceSec: new(big.Int).SetUint64(0),
 		},
@@ -327,7 +327,7 @@ func newOrder() (*market.IMarketOrder, error) {
 		// Provider: eth.Addr2,
 
 		// the cp's node selected bye this order
-		NodeId: new(big.Int).SetInt64(1),
+		NodeId: 1,
 
 		// deposit 0.01 eth
 		// TotalValue:     totalValue,
