@@ -298,7 +298,7 @@ func CreateOrderData() []byte {
 
 	fmt.Println("packing")
 	// pack all params into input
-	input, err := method.Inputs.Pack(eth.Addr2, *order)
+	input, err := method.Inputs.Pack(*order)
 	if err != nil {
 		panic(err)
 	}
@@ -312,7 +312,7 @@ func CreateOrderData() []byte {
 // generate a test order
 func newOrder() (*market.IMarketOrder, error) {
 	// generate an order with init data
-	totalValue, ok := new(big.Int).SetString("40", 10)
+	totalValue, ok := new(big.Int).SetString("400000", 10)
 	if !ok {
 		return nil, fmt.Errorf("big set string failed")
 	}
@@ -324,9 +324,9 @@ func newOrder() (*market.IMarketOrder, error) {
 	// make an order
 	order := market.IMarketOrder{
 		// User:     eth.Addr1,
-		// Provider: eth.Addr2,
+		Provider: eth.Addr2,
 
-		// the cp's node selected bye this order
+		// the cp's node selected by this order
 		NodeId: 1,
 
 		// deposit 0.01 eth
@@ -336,7 +336,7 @@ func newOrder() (*market.IMarketOrder, error) {
 		ActivateTime:   new(big.Int).SetInt64(0),
 		LastSettleTime: new(big.Int).SetInt64(0),
 		Probation:      new(big.Int).SetInt64(5),
-		Duration:       new(big.Int).SetInt64(10),
+		Duration:       new(big.Int).SetInt64(100000),
 		Status:         1, // unactive
 	}
 

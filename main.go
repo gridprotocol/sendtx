@@ -30,7 +30,12 @@ func main() {
 
 		// load contracts
 		local := contracts.Local{}
-		local.LoadPath("../grid-contracts/eth/contracts/local.json")
+		err := local.LoadPath("../grid-contracts/eth/contracts/local.json")
+		//err := sepo.LoadPath("../grid-contracts/script/deployment.json")
+		if err != nil {
+			panic(err)
+		}
+
 		tx.Contracts = local.Contracts
 
 		fmt.Println("contract addresses on ganache:", tx.Contracts)
@@ -39,7 +44,12 @@ func main() {
 
 		// load contracts
 		sepo := contracts.Sepo{}
-		sepo.LoadPath("../grid-contracts/eth/contracts/sepo.json")
+		err := sepo.LoadPath("../grid-contracts/eth/contracts/sepo.json")
+		//err := sepo.LoadPath("../grid-contracts/script/deployment.json")
+		if err != nil {
+			panic(err)
+		}
+
 		tx.Contracts = sepo.Contracts
 
 		fmt.Println("contract addresses on sepo:", tx.Contracts)
@@ -48,7 +58,12 @@ func main() {
 
 		// load contracts
 		dev := contracts.Sepo{}
-		dev.LoadPath("../grid-contracts/eth/contracts/dev.json")
+		err := dev.LoadPath("../grid-contracts/eth/contracts/dev.json")
+		//err := dev.LoadPath("../grid-contracts/script/deployment.json")
+		if err != nil {
+			panic(err)
+		}
+
 		tx.Contracts = dev.Contracts
 
 		fmt.Println("contract addresses on dev:", tx.Contracts)
