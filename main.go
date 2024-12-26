@@ -13,7 +13,7 @@ import (
 
 func main() {
 	var txType uint
-	flag.UintVar(&txType, "tx", 1, "1=register 2=approve 3=createOrder 4=revise 5=userConfirm 6=userCancel")
+	flag.UintVar(&txType, "tx", 1, "1=register 2=approve 3=createOrder 4=revise 5=userConfirm 6=userCancel 7=updatecp")
 	chain := flag.String("chain", "local", "local:local chain, sepo:sepolia test chain")
 	auto := flag.Bool("auto", false, "auto send the tx to chain")
 
@@ -57,7 +57,7 @@ func main() {
 		endpoint = eth.DevChain
 
 		// load contracts
-		dev := contracts.Sepo{}
+		dev := contracts.Dev{}
 		err := dev.LoadPath("../grid-contracts/eth/contracts/dev.json")
 		//err := dev.LoadPath("../grid-contracts/script/deployment.json")
 		if err != nil {
@@ -67,6 +67,20 @@ func main() {
 		tx.Contracts = dev.Contracts
 
 		fmt.Println("contract addresses on dev:", tx.Contracts)
+	case "test":
+		endpoint = eth.TestChain
+
+		// load contracts
+		test := contracts.Test{}
+		err := test.LoadPath("../grid-contracts/eth/contracts/test.json")
+		//err := dev.LoadPath("../grid-contracts/script/deployment.json")
+		if err != nil {
+			panic(err)
+		}
+
+		tx.Contracts = test.Contracts
+
+		fmt.Println("contract addresses on test:", tx.Contracts)
 	}
 
 	txObj := tx.NewTx(endpoint)
@@ -195,6 +209,22 @@ func main() {
 			log.Fatal(err)
 		}
 		log.Printf("signedTx for [usercancel]: \n%s\n", txObj.JsonTx)
+
+		if *auto {
+			err := txObj.Send()
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+
+	// update cp info
+	case 7:
+		err := txObj.MakeUpdateCPTx()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		log.Printf("signedTx for [updatecp]: \n%s\n", txObj.JsonTx)
 
 		if *auto {
 			err := txObj.Send()

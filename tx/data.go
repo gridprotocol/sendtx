@@ -112,15 +112,48 @@ func RegisterData() []byte {
 	return data
 }
 
+// the tx data for calling registry.register
+func UpdateCpData() []byte {
+	// abi
+	registryABI, err := abi.JSON(strings.NewReader(RegABI))
+	if err != nil {
+		panic(err)
+	}
+
+	// func name
+	functionName := "updatecp"
+	//value := big.NewInt(0)
+
+	// make a cp
+	info, err := newCP()
+	if err != nil {
+		panic(err)
+	}
+
+	// pack params
+	method := registryABI.Methods[functionName]
+	//input, err := method.Inputs.Pack("a", "b", "c", uint64(10), uint64(20), uint64(40), uint64(807), uint64(33), uint64(33), uint64(33), uint64(33))
+	input, err := method.Inputs.Pack(info)
+	if err != nil {
+		panic(err)
+	}
+
+	// 构造完整的data字段
+	data := append(method.ID, input...)
+	//fmt.Printf("Data: %x\n", data)
+
+	return data
+}
+
 // generate a test cp
 func newCP() (*registry.IRegistryCP, error) {
 	// the register cp info
 	info := registry.IRegistryCP{
 		Addr:   common.HexToAddress("0xEf95c72C836605203F7f66788E450Af2a4141957"),
 		Name:   "cp1",
-		Ip:     "123.123.123.0",
+		Ip:     "183.240.197.189",
 		Domain: "testdomain",
-		Port:   "123",
+		Port:   "41234",
 
 		NNode: 0,
 		UNode: 0,
@@ -261,7 +294,8 @@ func ApproveData() []byte {
 	method := creditABI.Methods[functionName]
 
 	// set the amount to approve to market contract
-	amount, ok := new(big.Int).SetString("262695400", 10)
+	//amount, ok := new(big.Int).SetString("262695400", 10)
+	amount, ok := new(big.Int).SetString("40000000", 10)
 	if !ok {
 		panic(fmt.Errorf("big set string failed"))
 	}
@@ -312,7 +346,7 @@ func CreateOrderData() []byte {
 // generate a test order
 func newOrder() (*market.IMarketOrder, error) {
 	// generate an order with init data
-	totalValue, ok := new(big.Int).SetString("400000", 10)
+	totalValue, ok := new(big.Int).SetString("40000000", 10)
 	if !ok {
 		return nil, fmt.Errorf("big set string failed")
 	}
@@ -336,7 +370,7 @@ func newOrder() (*market.IMarketOrder, error) {
 		ActivateTime:   new(big.Int).SetInt64(0),
 		LastSettleTime: new(big.Int).SetInt64(0),
 		Probation:      new(big.Int).SetInt64(5),
-		Duration:       new(big.Int).SetInt64(100000),
+		Duration:       new(big.Int).SetInt64(10000000),
 		Status:         1, // unactive
 	}
 

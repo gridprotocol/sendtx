@@ -59,6 +59,31 @@ func (tx *Tx) MakeRegisterTx() error {
 	return nil
 }
 
+// Make tx for update cp
+func (tx *Tx) MakeUpdateCPTx() error {
+	// tx data
+	data := UpdateCpData()
+
+	log.Println("making signed updatecp tx")
+	// Make a signed tx
+	fmt.Println("cp sk: ", P_SK)
+	SignedTx, err := MakeSignedTx(tx.c, P_SK, common.HexToAddress(Contracts.Registry), nil, 1000000, data)
+	if err != nil {
+		return err
+	}
+
+	// marshal tx into json
+	js, err := SignedTx.MarshalJSON()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	tx.SignedTx = SignedTx
+	tx.JsonTx = js
+
+	return nil
+}
+
 // add node tx
 func (tx *Tx) MakeAddNodeTx(node *registry.IRegistryNode) error {
 	// tx data
